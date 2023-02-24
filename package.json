@@ -1,7 +1,6 @@
 {
   "name": "wallet-accounts",
   "version": "1.0.0",
-  "private": true,
   "description": "Wallet with sub-accounts as a smart contract",
   "main": "index.js",
   "scripts": {
