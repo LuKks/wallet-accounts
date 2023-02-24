@@ -1,6 +1,6 @@
 # wallet-accounts
 
-Wallet with multi-accounts as a smart contract
+Wallet with sub-accounts as a smart contract
 
 ```
 npm i wallet-accounts
