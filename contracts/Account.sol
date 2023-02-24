@@ -2,6 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "./CustomOwnable.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Address.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/security/ReentrancyGuard.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -23,11 +24,11 @@ contract Account is CustomOwnable, ReentrancyGuard {
     // emit Send(msg.sender, address(this), msg.value);
   }
 
-  function transfer (address payable recipient, address assetAddress, uint256 amount) external onlyOwner nonReentrant {
+  function transfer (address recipient, address assetAddress, uint256 amount) external onlyOwner nonReentrant {
     // native // ie. null 0x0000000000000000000000000000000000000000
     if (assetAddress == address(0)) {
       amount = amount == 0 ? address(this).balance : amount;
-      recipient.transfer(amount);
+      Address.sendValue(payable(recipient), amount);
       // emit Send(address(this), recipient, amount);
       return;
     }

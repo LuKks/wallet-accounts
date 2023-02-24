@@ -41,7 +41,7 @@ contract Wallet is AccessControl {
     emit AccountCreated(addr, index);
   }
 
-  function transfer (uint256 index, address payable recipient, address assetAddress, uint256 amount) public onlyRole(ACCOUNT_ROLE) {
+  function transfer (uint256 index, address recipient, address assetAddress, uint256 amount) public onlyRole(ACCOUNT_ROLE) {
     (address addr, bool exists, ) = get(index);
     if (!exists) create(index);
 
@@ -55,7 +55,7 @@ contract Wallet is AccessControl {
     Account(payable(addr)).swap(method, router, amountIn, amountOutMin, path, to);
   }
 
-  function transferBatch (uint256[] calldata index, address payable[] calldata recipient, address[] calldata assetAddress, uint256[] memory amount) external onlyRole(ACCOUNT_ROLE) {
+  function transferBatch (uint256[] calldata index, address[] calldata recipient, address[] calldata assetAddress, uint256[] memory amount) external onlyRole(ACCOUNT_ROLE) {
     require(index.length >= 1);
     require(index.length == recipient.length && recipient.length == assetAddress.length && assetAddress.length == amount.length);
 
