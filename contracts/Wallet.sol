@@ -1,21 +1,21 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.19;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControl.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/proxy/Clones.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.3/contracts/access/AccessControl.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.3/contracts/proxy/Clones.sol";
 import "./Account.sol";
 
 contract Wallet is AccessControl {
   bytes32 public constant ACCOUNT_ROLE = keccak256("ACCOUNT_ROLE");
 
   Account public modelAccount;
-  mapping (bytes32 => address) public accounts; // + this could be bytes32 => Account
+  mapping (bytes32 => address) public accounts; // TODO: This could be bytes32 => Account
 
   event AccountCreated (address addr, uint256 index);
 
   constructor () {
-    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    _setupRole(ACCOUNT_ROLE, msg.sender);
+    _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    _grantRole(ACCOUNT_ROLE, msg.sender);
 
     modelAccount = new Account();
     modelAccount.init(address(this));
